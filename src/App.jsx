@@ -14,8 +14,16 @@ function App() {
     e.preventDefault();
     const value = input.trim();
     if (value === "") return alert("Insert text plz");
-    setTodos([...todos, value]);
+    const newItem = {
+      id: Math.random(),
+      text: value
+    }
+    setTodos([...todos, newItem]);
     document.querySelector("input").value = "";
+  };
+
+  const onDeleteItem = (id) => {
+    setTodos(todos.filter((item) => item.id !== id));
   };
 
   return (
@@ -27,7 +35,13 @@ function App() {
       </form>
       <ul>
         {todos.map((todoItem) => {
-          return <TodoItem text={todoItem} key={todos.indexOf(todoItem)} />;
+          return (
+            <TodoItem
+              item={todoItem}
+              key={todoItem.id}
+              onDelete={onDeleteItem}
+            />
+          );
         })}
       </ul>
     </>

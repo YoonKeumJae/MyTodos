@@ -1,13 +1,11 @@
-const TodoItem = ({ text }) => {
+const TodoItem = ({ item, onDelete }) => {
   return (
     <li>
-      <span>
-        {text}
-      </span>
-      <button>X</button>
+      <span>{item.text}</span>
+      <button onClick={()=>onDelete(item.id)}>X</button>
       <button>✏️</button>
     </li>
   );
-}
+};
 
 export default TodoItem;
