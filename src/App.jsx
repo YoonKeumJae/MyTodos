@@ -16,8 +16,8 @@ function App() {
     if (value === "") return alert("Insert text plz");
     const newItem = {
       id: Math.random(),
-      text: value
-    }
+      text: value,
+    };
     setTodos([...todos, newItem]);
     document.querySelector("input").value = "";
   };
