@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const TodoItem = ({ item, onDelete }) => {
   const [isEdit, setIsEdit] = useState(false);
-  const [input, setInput] = useState(item.text);
+  const [input, setInput] = useState("");
 
   const onClickEdit = () => {
     setIsEdit(true);
@@ -20,6 +20,10 @@ const TodoItem = ({ item, onDelete }) => {
   };
 
   const onClickDone = () => {
+    if(input==="" ) {
+      alert("Insert text plz");
+      return;
+    }
     item.text = input;
     setIsEdit(false);
   };
