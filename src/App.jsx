@@ -27,13 +27,18 @@ function App() {
   };
 
   return (
-    <>
-      <h1>The TODOLIST Project</h1>
+    <div className="flex flex-col items-center justify-center w-full h-screen">
+      <h1 className="text-5xl text-blue-500">Jarvis</h1>
       <form onSubmit={onSubmit}>
-        <input type="text" placeholder="Input your todos" onChange={onChange} />
-        <button type="submit">OK</button>
+        <input
+          className="border-solid border-2 border-sky-600 rounded-3xl p-4 mt-20 mb-10"
+          type="text"
+          placeholder="Input your todos"
+          onChange={onChange}
+        />
+        {/* <button type="submit">OK</button> */}
       </form>
-      <ul>
+      <ul className="bg-green-400 w-2/5 flex flex-col item-center p-5">
         {todos.map((todoItem) => {
           return (
             <TodoItem
@@ -44,7 +49,7 @@ function App() {
           );
         })}
       </ul>
-    </>
+    </div>
   );
 }
 
