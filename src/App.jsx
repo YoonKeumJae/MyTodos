@@ -1,5 +1,43 @@
 import TodoItem from "./components/TodoItem.jsx";
 import { useState } from "react";
+import styled from "styled-components";
+import { GREEN001 } from "./GlobalStyle.js";
+
+const Wrapper = styled.div`
+  width: 100%;
+  height: 100vh;
+  padding: 0 20%;
+  background-color: ${GREEN001};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Title = styled.h1`
+  font-weight: bold;
+  font-size: 3rem;
+  margin-top: 80px;
+`;
+
+const Input = styled.input`
+  border: none;
+  margin: 40px 0;
+  font-size: 2rem;
+  border-radius: 12px;
+  padding: 15px;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const TodoWrapper = styled.ul`
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -27,13 +65,13 @@ function App() {
   };
 
   return (
-    <>
-      <h1>The TODOLIST Project</h1>
+    <Wrapper>
+      <Title>Todo</Title>
       <form onSubmit={onSubmit}>
-        <input type="text" placeholder="Input your todos" onChange={onChange} />
-        <button type="submit">OK</button>
+        <Input type="text" placeholder="Input your todos" onChange={onChange} />
+        {/* <button type="submit">OK</button> */}
       </form>
-      <ul>
+      <TodoWrapper>
         {todos.map((todoItem) => {
           return (
             <TodoItem
@@ -43,8 +81,8 @@ function App() {
             />
           );
         })}
-      </ul>
-    </>
+      </TodoWrapper>
+    </Wrapper>
   );
 }
 
