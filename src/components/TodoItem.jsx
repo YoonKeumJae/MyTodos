@@ -20,7 +20,7 @@ const TodoItem = ({ item, onDelete }) => {
   };
 
   const onClickDone = () => {
-    if(input==="" ) {
+    if (input === "") {
       alert("Insert text plz");
       return;
     }
@@ -32,14 +32,14 @@ const TodoItem = ({ item, onDelete }) => {
     <li>
       {isEdit ? (
         <>
-          <input onChange={onChangeInput} placeholder={item.text}/>
-          <button onClick={onClickCancel}>X</button>
+          <input onChange={onChangeInput} placeholder={item.text} />
+          <button onClick={onClickCancel}>❌</button>
           <button onClick={onClickDone}>✅</button>
         </>
       ) : (
         <>
           <span>{item.text}</span>
-          <button onClick={() => onDelete(item.id)}>X</button>
+          <button onClick={() => onDelete(item.id)}>❌</button>
           <button onClick={onClickEdit}>✏️</button>
         </>
       )}
