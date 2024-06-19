@@ -45,7 +45,7 @@ const Buttons = styled.ul`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 `;
 
 const Button = styled.button`
@@ -74,6 +74,7 @@ function App() {
       text: value,
     };
     setTodos([...todos, newItem]);
+    setInput("");
     document.querySelector("input").value = "";
   };
 
