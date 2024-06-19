@@ -1,7 +1,7 @@
 import TodoItem from "./components/TodoItem.jsx";
 import { useState } from "react";
 import styled from "styled-components";
-import { GREEN001 } from "./GlobalStyle.js";
+import { BLUE001, GREEN001 } from "./GlobalStyle.js";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -39,6 +39,23 @@ const TodoWrapper = styled.ul`
   align-items: center;
 `;
 
+const Buttons = styled.ul`
+  width: 100%;
+  height: 2rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 30px;
+`;
+
+const Button = styled.button`
+  height: 3rem;
+  font-size: 2rem;
+  background-color: transparent;
+  border: 4px solid ${BLUE001};
+  border-radius: 10px;
+`;
+
 function App() {
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState("");
@@ -57,11 +74,24 @@ function App() {
       text: value,
     };
     setTodos([...todos, newItem]);
+    setInput("");
     document.querySelector("input").value = "";
   };
 
   const onDeleteItem = (id) => {
     setTodos(todos.filter((item) => item.id !== id));
+  };
+
+  const onClickClearAll = (e) => {
+    e.preventDefault();
+    if (todos.length === 0) {
+      alert("There's nothing to do");
+      return;
+    }
+    if (confirm("Clear ALL todos??")) {
+      setTodos([]);
+    }
+    return;
   };
 
   return (
@@ -71,6 +101,9 @@ function App() {
         <Input type="text" placeholder="Input your todos" onChange={onChange} />
         {/* <button type="submit">OK</button> */}
       </form>
+      <Buttons>
+        <Button onClick={onClickClearAll}>Clear All</Button>
+      </Buttons>
       <TodoWrapper>
         {todos.map((todoItem) => {
           return (
