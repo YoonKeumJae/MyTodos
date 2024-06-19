@@ -59,10 +59,7 @@ const TodoItem = ({ item, onDelete }) => {
   };
 
   const onClickCancel = () => {
-    if (confirm("Will you cancel editing?")) {
-      setIsEdit(false);
-      return;
-    }
+    setIsEdit(false);
   };
 
   const onClickDone = () => {
