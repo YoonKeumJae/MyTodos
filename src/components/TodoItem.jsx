@@ -46,29 +46,29 @@ const EditInput = styled.input`
   }
 `;
 
-const TodoItem = ({ item, onDelete }) => {
+const TodoItem = ({ item, update, remove }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [input, setInput] = useState("");
-
-  const onClickEdit = () => {
-    setIsEdit(true);
-  };
 
   const onChangeInput = (e) => {
     setInput(e.target.value);
   };
 
-  const onClickCancel = () => {
-    setIsEdit(false);
-  };
-
-  const onClickDone = () => {
+  const onFinishEdit = () => {
+    console.log(input);
     if (input === "") {
       alert("Insert text plz");
       return;
     }
-    item.text = input;
+    console.log(item); //TODO: correct update logic
+    update(item.id, input);
     setIsEdit(false);
+  };
+
+  const onEdit = (e) => {
+    e.preventDefault();
+    setInput(item.text);
+    setIsEdit(true);
   };
 
   return (
@@ -77,16 +77,16 @@ const TodoItem = ({ item, onDelete }) => {
         <>
           <EditInput onChange={onChangeInput} placeholder={item.text} />
           <ButtonsWrapper>
-            <DeleteButton onClick={onClickCancel}>❌</DeleteButton>
-            <EditButton onClick={onClickDone}>✅</EditButton>
+            <DeleteButton onClick={() => setIsEdit(false)}>❌</DeleteButton>
+            <EditButton onClick={onFinishEdit}>✅</EditButton>
           </ButtonsWrapper>
         </>
       ) : (
         <>
           <ItemText>{item.text}</ItemText>
           <ButtonsWrapper>
-            <DeleteButton onClick={() => onDelete(item.id)}>❌</DeleteButton>
-            <EditButton onClick={onClickEdit}>✏️</EditButton>
+            <DeleteButton onClick={() => remove(item.id)}>❌</DeleteButton>
+            <EditButton onClick={onEdit}>✏️</EditButton>
           </ButtonsWrapper>
         </>
       )}
