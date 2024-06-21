@@ -1,64 +1,11 @@
-import TodoItem from "./components/TodoItem.jsx";
+import TodoItem from "@components/TodoItem.jsx";
 import { useState } from "react";
-import styled from "styled-components";
-import { BLUE001, GREEN001 } from "./GlobalStyle.js";
-
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100vh;
-  padding: 0 20%;
-  background-color: ${GREEN001};
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Title = styled.h1`
-  font-weight: bold;
-  font-size: 3rem;
-  margin-top: 80px;
-`;
-
-const Input = styled.input`
-  border: none;
-  margin: 40px 0;
-  font-size: 2rem;
-  border-radius: 12px;
-  padding: 15px;
-  &:focus {
-    outline: none;
-  }
-`;
-
-const TodoWrapper = styled.ul`
-  width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Buttons = styled.ul`
-  width: 100%;
-  height: 2rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  margin-bottom: 30px;
-`;
-
-const Button = styled.button`
-  height: 3rem;
-  font-size: 2rem;
-  background-color: transparent;
-  border: 4px solid ${BLUE001};
-  border-radius: 10px;
-`;
+import useTodo from "@hooks/useTodo.js";
+import Styles from "@styles/styledApp.js";
 
 function App() {
-  const [todos, setTodos] = useState([]);
   const [input, setInput] = useState("");
+  const { todos, addTodo, resetTodo, updateTodo, removeTodo } = useTodo();
 
   const onChange = (e) => {
     const value = e.target.value;
@@ -69,17 +16,9 @@ function App() {
     e.preventDefault();
     const value = input.trim();
     if (value === "") return alert("Insert text plz");
-    const newItem = {
-      id: Math.random(),
-      text: value,
-    };
-    setTodos([...todos, newItem]);
+    addTodo(value);
     setInput("");
     document.querySelector("input").value = "";
-  };
-
-  const onDeleteItem = (id) => {
-    setTodos(todos.filter((item) => item.id !== id));
   };
 
   const onClickClearAll = (e) => {
@@ -89,33 +28,37 @@ function App() {
       return;
     }
     if (confirm("Clear ALL todos??")) {
-      setTodos([]);
+      resetTodo();
     }
     return;
   };
 
   return (
-    <Wrapper>
-      <Title>Todo</Title>
+    <Styles.Wrapper>
+      <Styles.Title>Todo</Styles.Title>
       <form onSubmit={onSubmit}>
-        <Input type="text" placeholder="Input your todos" onChange={onChange} />
-        {/* <button type="submit">OK</button> */}
+        <Styles.Input
+          type="text"
+          placeholder="Input your todos"
+          onChange={onChange}
+        />
       </form>
-      <Buttons>
-        <Button onClick={onClickClearAll}>Clear All</Button>
-      </Buttons>
-      <TodoWrapper>
+      <Styles.Buttons>
+        <Styles.Button onClick={onClickClearAll}>Clear All</Styles.Button>
+      </Styles.Buttons>
+      <Styles.TodoWrapper>
         {todos.map((todoItem) => {
           return (
             <TodoItem
               item={todoItem}
               key={todoItem.id}
-              onDelete={onDeleteItem}
+              update={updateTodo}
+              remove={removeTodo}
             />
           );
         })}
-      </TodoWrapper>
-    </Wrapper>
+      </Styles.TodoWrapper>
+    </Styles.Wrapper>
   );
 }
 

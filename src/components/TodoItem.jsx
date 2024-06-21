@@ -1,99 +1,50 @@
 import { useState } from "react";
-import styled from "styled-components";
-import { BLUE001, BLUE002 } from "../GlobalStyle";
+import Styles from "@styles/styledTodoItem";
 
-const TodoItemWrapper = styled.li`
-  width: 100%;
-  height: 4rem;
-  margin-bottom: 10px;
-  padding: 1rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  border: 4px solid ${BLUE002};
-  border-radius: 10px;
-`;
 
-const ItemText = styled.span`
-  font-size: 2rem;
-`;
-
-const ButtonsWrapper = styled.div``;
-
-const DeleteButton = styled.button`
-  padding: 10px;
-  border: 2px solid ${BLUE001};
-  border-radius: 40%;
-  background-color: transparent;
-  margin-right: 10px;
-`;
-
-const EditButton = styled.button`
-  padding: 10px;
-  border: 2px solid ${BLUE001};
-  border-radius: 40%;
-  background-color: transparent;
-`;
-
-const EditInput = styled.input`
-  border: none;
-  margin: 40px 0;
-  font-size: 2rem;
-  border-radius: 12px;
-  &:focus {
-    outline: none;
-  }
-`;
-
-const TodoItem = ({ item, onDelete }) => {
+const TodoItem = ({ item, update, remove }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [input, setInput] = useState("");
-
-  const onClickEdit = () => {
-    setIsEdit(true);
-  };
 
   const onChangeInput = (e) => {
     setInput(e.target.value);
   };
 
-  const onClickCancel = () => {
-    if (confirm("Will you cancel editing?")) {
-      setIsEdit(false);
-      return;
-    }
-  };
-
-  const onClickDone = () => {
+  const onFinishEdit = () => {
     if (input === "") {
       alert("Insert text plz");
       return;
     }
-    item.text = input;
+    update(item.id, input);
     setIsEdit(false);
   };
 
+  const onEdit = (e) => {
+    e.preventDefault();
+    setInput(item.text);
+    setIsEdit(true);
+  };
+
   return (
-    <TodoItemWrapper>
+    <Styles.TodoItemWrapper>
       {isEdit ? (
         <>
-          <EditInput onChange={onChangeInput} placeholder={item.text} />
-          <ButtonsWrapper>
-            <DeleteButton onClick={onClickCancel}>❌</DeleteButton>
-            <EditButton onClick={onClickDone}>✅</EditButton>
-          </ButtonsWrapper>
+          <Styles.EditInput onChange={onChangeInput} placeholder={item.text} />
+          <Styles.ButtonsWrapper>
+            <Styles.DeleteButton onClick={() => setIsEdit(false)}>❌</Styles.DeleteButton>
+            <Styles.EditButton onClick={onFinishEdit}>✅</Styles.EditButton>
+          </Styles.ButtonsWrapper>
         </>
       ) : (
         <>
-          <ItemText>{item.text}</ItemText>
-          <ButtonsWrapper>
-            <DeleteButton onClick={() => onDelete(item.id)}>❌</DeleteButton>
-            <EditButton onClick={onClickEdit}>✏️</EditButton>
-          </ButtonsWrapper>
+          <Styles.ItemText>{item.text}</Styles.ItemText>
+          <Styles.ButtonsWrapper>
+            <Styles.DeleteButton onClick={() => remove(item.id)}>❌</Styles.DeleteButton>
+            <Styles.EditButton onClick={onEdit}>✏️</Styles.EditButton>
+          </Styles.ButtonsWrapper>
         </>
       )}
-    </TodoItemWrapper>
+    </Styles.TodoItemWrapper>
   );
 };
 
