@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Styles from "../styles/styledTodoItem";
+import Styles from "@styles/styledTodoItem";
 
 
 const TodoItem = ({ item, update, remove }) => {
@@ -11,12 +11,10 @@ const TodoItem = ({ item, update, remove }) => {
   };
 
   const onFinishEdit = () => {
-    console.log(input);
     if (input === "") {
       alert("Insert text plz");
       return;
     }
-    console.log(item); 
     update(item.id, input);
     setIsEdit(false);
   };

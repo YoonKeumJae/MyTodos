@@ -22,7 +22,6 @@ const useTodo = () => {
     const updatedTodo = todos.map((todo) =>
       todo.id === id ? { ...todo, text: text } : todo
     );
-    console.log(updatedTodo);
     setTodos(updatedTodo);
   };
   /**

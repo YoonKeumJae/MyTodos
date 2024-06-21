@@ -1,7 +1,7 @@
-import TodoItem from "./components/TodoItem.jsx";
+import TodoItem from "@components/TodoItem.jsx";
 import { useState } from "react";
-import useTodo from "./hooks/useTodo.js";
-import Styles from "./styles/styledApp.js";
+import useTodo from "@hooks/useTodo.js";
+import Styles from "@styles/styledApp.js";
 
 function App() {
   const [input, setInput] = useState("");
