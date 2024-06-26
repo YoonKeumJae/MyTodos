@@ -7,6 +7,12 @@ const TodoItem = ({ item, update, remove }) => {
 
   const modifyInput = useRef();
 
+  const onPressEnter = useCallback((e) => {
+    if (e.key === "Enter") {
+      onFinishEdit();
+    }
+  });
+
   const onChangeInput = useCallback((e) => {
     setInput(e.target.value);
   }, []);
@@ -39,6 +45,7 @@ const TodoItem = ({ item, update, remove }) => {
             onChange={onChangeInput}
             placeholder={item.text}
             ref={modifyInput}
+            onKeyPress={onPressEnter}
           />
           <Styles.ButtonsWrapper>
             <Styles.DeleteButton onClick={() => setIsEdit(false)}>
