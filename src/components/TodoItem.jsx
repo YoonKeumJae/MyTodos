@@ -1,9 +1,17 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import Styles from "@styles/styledTodoItem";
 
 const TodoItem = ({ item, update, remove }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [input, setInput] = useState("");
+
+  const modifyInput = useRef();
+
+  const onPressEnter = useCallback((e) => {
+    if (e.key === "Enter") {
+      onFinishEdit();
+    }
+  });
 
   const onChangeInput = useCallback((e) => {
     setInput(e.target.value);
@@ -19,10 +27,12 @@ const TodoItem = ({ item, update, remove }) => {
   }, [input, item.id, update]);
 
   const onEdit = useCallback(
-    (e) => {
+    async (e) => {
       e.preventDefault();
       setInput(item.text);
       setIsEdit(true);
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      modifyInput.current.focus();
     },
     [item.text]
   );
@@ -31,7 +41,12 @@ const TodoItem = ({ item, update, remove }) => {
     <Styles.TodoItemWrapper>
       {isEdit ? (
         <>
-          <Styles.EditInput onChange={onChangeInput} placeholder={item.text} />
+          <Styles.EditInput
+            onChange={onChangeInput}
+            placeholder={item.text}
+            ref={modifyInput}
+            onKeyPress={onPressEnter}
+          />
           <Styles.ButtonsWrapper>
             <Styles.DeleteButton onClick={() => setIsEdit(false)}>
               ❌
