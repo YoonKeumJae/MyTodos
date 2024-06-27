@@ -7,12 +7,6 @@ const TodoItem = ({ item, update, remove }) => {
 
   const modifyInput = useRef();
 
-  const onPressEnter = useCallback((e) => {
-    if (e.key === "Enter") {
-      onFinishEdit();
-    }
-  });
-
   const onChangeInput = useCallback((e) => {
     setInput(e.target.value);
   }, []);
@@ -25,6 +19,14 @@ const TodoItem = ({ item, update, remove }) => {
     update(item.id, input);
     setIsEdit(false);
   }, [input, item.id, update]);
+
+  const onKeyPress = useCallback(
+    (e) => {
+      if (e.key === "Enter") onFinishEdit();
+      if (e.key === "Escape") setIsEdit(false);
+    },
+    [onFinishEdit, setIsEdit]
+  );
 
   const onEdit = useCallback(
     async (e) => {
@@ -45,7 +47,7 @@ const TodoItem = ({ item, update, remove }) => {
             onChange={onChangeInput}
             placeholder={item.text}
             ref={modifyInput}
-            onKeyPress={onPressEnter}
+            onKeyDown={onKeyPress}
           />
           <Styles.ButtonsWrapper>
             <Styles.DeleteButton onClick={() => setIsEdit(false)}>
