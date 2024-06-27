@@ -40,7 +40,7 @@ const TodoItem = ({ item, update, remove }) => {
   );
 
   return (
-    <Styles.TodoItemWrapper>
+    <Styles.TodoItemWrapper tabIndex="0">
       {isEdit ? (
         <>
           <Styles.EditInput
@@ -50,20 +50,24 @@ const TodoItem = ({ item, update, remove }) => {
             onKeyDown={onKeyPress}
           />
           <Styles.ButtonsWrapper>
-            <Styles.DeleteButton onClick={() => setIsEdit(false)}>
+            <Styles.DeleteButton onClick={() => setIsEdit(false)} tabIndex="1">
               ❌
             </Styles.DeleteButton>
-            <Styles.EditButton onClick={onFinishEdit}>✅</Styles.EditButton>
+            <Styles.EditButton onClick={onFinishEdit} tabIndex="1">
+              ✅
+            </Styles.EditButton>
           </Styles.ButtonsWrapper>
         </>
       ) : (
         <>
           <Styles.ItemText>{item.text}</Styles.ItemText>
           <Styles.ButtonsWrapper>
-            <Styles.DeleteButton onClick={() => remove(item.id)}>
+            <Styles.DeleteButton onClick={() => remove(item.id)} tabIndex="1">
               ❌
             </Styles.DeleteButton>
-            <Styles.EditButton onClick={onEdit}>✏️</Styles.EditButton>
+            <Styles.EditButton onClick={onEdit} tabIndex="1">
+              ✏️
+            </Styles.EditButton>
           </Styles.ButtonsWrapper>
         </>
       )}
