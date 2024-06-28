@@ -20,17 +20,9 @@ const TodoItem = ({ item, update, remove }) => {
     setIsEdit(false);
   }, [input, item.id, update]);
 
-  const onKeyPress = useCallback(
-    (e) => {
-      if (e.key === "Enter") onFinishEdit();
-      if (e.key === "Escape") setIsEdit(false);
-    },
-    [onFinishEdit, setIsEdit]
-  );
-
   const onEdit = useCallback(
     async (e) => {
-      e.preventDefault();
+      // e.preventDefault();
       setInput(item.text);
       setIsEdit(true);
       await new Promise((resolve) => setTimeout(resolve, 0));
@@ -39,15 +31,43 @@ const TodoItem = ({ item, update, remove }) => {
     [item.text]
   );
 
+  const onKeyPress = useCallback(
+    (e) => {
+      if (isEdit) {
+        switch (e.key) {
+          case "Enter":
+            onFinishEdit();
+            break;
+          case "Escape":
+            setIsEdit(false);
+            break;
+          default:
+            break;
+        }
+      } else {
+        switch (e.key) {
+          case "Enter":
+            onEdit();
+            break;
+          case "Backspace":
+            remove(item.id);
+            break;
+          default:
+            break;
+        }
+      }
+    },
+    [onFinishEdit, setIsEdit, onEdit, remove, item.id, isEdit]
+  );
+
   return (
-    <Styles.TodoItemWrapper tabIndex="0">
+    <Styles.TodoItemWrapper tabIndex="0" onKeyDown={onKeyPress}>
       {isEdit ? (
         <>
           <Styles.EditInput
             onChange={onChangeInput}
             placeholder={item.text}
             ref={modifyInput}
-            onKeyDown={onKeyPress}
           />
           <Styles.ButtonsWrapper>
             <Styles.DeleteButton onClick={() => setIsEdit(false)} tabIndex="1">
