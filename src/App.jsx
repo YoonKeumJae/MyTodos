@@ -1,11 +1,12 @@
 import TodoItem from "@components/TodoItem.jsx";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import useTodo from "@hooks/useTodo.js";
 import Styles from "@styles/styledApp.js";
 
 function App() {
   const [input, setInput] = useState("");
   const { todos, addTodo, resetTodo, updateTodo, removeTodo } = useTodo();
+  const inputField = useRef();
 
   const onChange = (e) => {
     const value = e.target.value;
@@ -18,7 +19,7 @@ function App() {
     if (value === "") return alert("Insert text plz");
     addTodo(value);
     setInput("");
-    document.querySelector("input").value = "";
+    inputField.current.value = "";
   };
 
   const onClickClearAll = (e) => {
@@ -41,6 +42,7 @@ function App() {
           type="text"
           placeholder="Input your todos"
           onChange={onChange}
+          ref = {inputField}
         />
       </form>
       <Styles.Buttons>

@@ -7,12 +7,6 @@ const TodoItem = ({ item, update, remove }) => {
 
   const modifyInput = useRef();
 
-  const onPressEnter = useCallback((e) => {
-    if (e.key === "Enter") {
-      onFinishEdit();
-    }
-  });
-
   const onChangeInput = useCallback((e) => {
     setInput(e.target.value);
   }, []);
@@ -28,7 +22,7 @@ const TodoItem = ({ item, update, remove }) => {
 
   const onEdit = useCallback(
     async (e) => {
-      e.preventDefault();
+      // e.preventDefault();
       setInput(item.text);
       setIsEdit(true);
       await new Promise((resolve) => setTimeout(resolve, 0));
@@ -37,31 +31,63 @@ const TodoItem = ({ item, update, remove }) => {
     [item.text]
   );
 
+  const onKeyPress = useCallback(
+    (e) => {
+      if (isEdit) {
+        switch (e.key) {
+          case "Enter":
+            onFinishEdit();
+            break;
+          case "Escape":
+            setIsEdit(false);
+            break;
+          default:
+            break;
+        }
+      } else {
+        switch (e.key) {
+          case "Enter":
+            onEdit();
+            break;
+          case "Backspace":
+            remove(item.id);
+            break;
+          default:
+            break;
+        }
+      }
+    },
+    [onFinishEdit, setIsEdit, onEdit, remove, item.id, isEdit]
+  );
+
   return (
-    <Styles.TodoItemWrapper>
+    <Styles.TodoItemWrapper tabIndex="0" onKeyDown={onKeyPress}>
       {isEdit ? (
         <>
           <Styles.EditInput
             onChange={onChangeInput}
             placeholder={item.text}
             ref={modifyInput}
-            onKeyPress={onPressEnter}
           />
           <Styles.ButtonsWrapper>
-            <Styles.DeleteButton onClick={() => setIsEdit(false)}>
+            <Styles.DeleteButton onClick={() => setIsEdit(false)} tabIndex="1">
               ❌
             </Styles.DeleteButton>
-            <Styles.EditButton onClick={onFinishEdit}>✅</Styles.EditButton>
+            <Styles.EditButton onClick={onFinishEdit} tabIndex="1">
+              ✅
+            </Styles.EditButton>
           </Styles.ButtonsWrapper>
         </>
       ) : (
         <>
           <Styles.ItemText>{item.text}</Styles.ItemText>
           <Styles.ButtonsWrapper>
-            <Styles.DeleteButton onClick={() => remove(item.id)}>
+            <Styles.DeleteButton onClick={() => remove(item.id)} tabIndex="1">
               ❌
             </Styles.DeleteButton>
-            <Styles.EditButton onClick={onEdit}>✏️</Styles.EditButton>
+            <Styles.EditButton onClick={onEdit} tabIndex="1">
+              ✏️
+            </Styles.EditButton>
           </Styles.ButtonsWrapper>
         </>
       )}
