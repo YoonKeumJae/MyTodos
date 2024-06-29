@@ -21,8 +21,7 @@ const TodoItem = ({ item, update, remove }) => {
   }, [input, item.id, update]);
 
   const onEdit = useCallback(
-    async (e) => {
-      // e.preventDefault();
+    async () => {
       setInput(item.text);
       setIsEdit(true);
       await new Promise((resolve) => setTimeout(resolve, 0));

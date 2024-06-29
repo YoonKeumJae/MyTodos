@@ -1,5 +1,5 @@
 import TodoItem from "@components/TodoItem.jsx";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import useTodo from "@hooks/useTodo.js";
 import Styles from "@styles/styledApp.js";
 
@@ -7,6 +7,10 @@ function App() {
   const [input, setInput] = useState("");
   const { todos, addTodo, resetTodo, updateTodo, removeTodo } = useTodo();
   const inputField = useRef();
+
+  useEffect(() => {
+    inputField.current.focus();
+  }, []);
 
   const onChange = (e) => {
     const value = e.target.value;
@@ -42,7 +46,7 @@ function App() {
           type="text"
           placeholder="Input your todos"
           onChange={onChange}
-          ref = {inputField}
+          ref={inputField}
         />
       </form>
       <Styles.Buttons>
