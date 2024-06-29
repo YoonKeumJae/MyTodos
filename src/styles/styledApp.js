@@ -24,7 +24,7 @@ const Styles = {
     font-size: 2rem;
     border-radius: 12px;
     padding: 15px;
-    &:focus {
+    &:focus-visible {
       outline: none;
     }
   `,
@@ -53,6 +53,7 @@ const Styles = {
     background-color: transparent;
     border: 4px solid ${BLUE001};
     border-radius: 10px;
+    cursor: pointer;
   `,
 };
 

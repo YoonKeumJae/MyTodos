@@ -13,6 +13,9 @@ const Styles = {
     align-items: center;
     border: 4px solid ${BLUE002};
     border-radius: 10px;
+    &:focus-visible {
+      background-color: #cfcfcf;
+    }
   `,
 
   ItemText: styled.span`
@@ -27,6 +30,7 @@ const Styles = {
     border-radius: 40%;
     background-color: transparent;
     margin-right: 10px;
+    cursor: pointer;
   `,
 
   EditButton: styled.button`
@@ -34,6 +38,7 @@ const Styles = {
     border: 2px solid ${BLUE001};
     border-radius: 40%;
     background-color: transparent;
+    cursor: pointer;
   `,
 
   EditInput: styled.input`
