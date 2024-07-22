@@ -1,7 +1,7 @@
 import { useState, useCallback, useRef } from "react";
 import Styles from "@styles/styledTodoItem";
 
-const TodoItem = ({ item, update, remove }) => {
+const TodoItem = ({ item, update, toggle, remove }) => {
   const [isEdit, setIsEdit] = useState(false);
   const [input, setInput] = useState("");
 
@@ -30,6 +30,10 @@ const TodoItem = ({ item, update, remove }) => {
     },
     [item.text]
   );
+
+  const onToggle = useCallback(()=>{
+    toggle(item.id);
+  });
 
   const onKeyPress = useCallback(
     (e) => {
@@ -80,6 +84,11 @@ const TodoItem = ({ item, update, remove }) => {
         </>
       ) : (
         <>
+          <input
+            type="checkbox"
+            checked={item.isDone}
+            onChange={()=>onToggle(item.id)}
+          />
           <Styles.ItemText>{item.text}</Styles.ItemText>
           <Styles.ButtonsWrapper>
             <Styles.DeleteButton onClick={() => remove(item.id)} tabIndex="1">

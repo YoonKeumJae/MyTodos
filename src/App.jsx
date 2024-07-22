@@ -5,7 +5,7 @@ import Styles from "@styles/styledApp.js";
 
 function App() {
   const [input, setInput] = useState("");
-  const { todos, addTodo, resetTodo, updateTodo, removeTodo } = useTodo();
+  const { todos, addTodo, toggleTodo, resetTodo, updateTodo, removeTodo } = useTodo();
   const inputField = useRef();
 
   const onChange = (e) => {
@@ -52,8 +52,9 @@ function App() {
         {todos.map((todoItem) => {
           return (
             <TodoItem
-              item={todoItem}
               key={todoItem.id}
+              item={todoItem}
+              toggle={toggleTodo}
               update={updateTodo}
               remove={removeTodo}
             />

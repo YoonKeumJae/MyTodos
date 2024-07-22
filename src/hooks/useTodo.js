@@ -10,9 +10,19 @@ const useTodo = () => {
     const newItem = {
       id: Math.random(),
       text: text,
+      isDone: false,
     };
     setTodos([...todos, newItem]);
   };
+  /**
+   * @param {number} id - Todo's id
+   */
+  const toggleTodo = (id) =>{
+    const updatedTodo = todos.map((todo) =>
+      todo.id === id ? { ...todo, isDone: !todo.isDone } : todo
+    );
+    setTodos(updatedTodo);
+  }
   /**
    *
    * @param {number} id - Todo's id
@@ -39,6 +49,7 @@ const useTodo = () => {
   return {
     todos,
     addTodo,
+    toggleTodo,
     updateTodo,
     removeTodo,
     resetTodo,
